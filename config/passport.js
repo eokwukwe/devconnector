@@ -13,6 +13,8 @@ opts.secretOrKey = jwtSecret.jwt_secret;
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
+      // jwt_payload includes the user data used to generate
+      // the token during authentication.
       User.findById(jwt_payload.id)
         .then((user) => {
           if (user) {
