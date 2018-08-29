@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
-// Passport Config
+// Passport Config for authentication
 require('./config/passport')(passport);
 
 // Connect to DB
