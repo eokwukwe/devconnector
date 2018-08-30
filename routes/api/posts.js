@@ -19,8 +19,8 @@ router.get('/test', (req, res) => res.json({ msg: 'Posts works' }));
 router.get('/', (req, res) => {
   Post.find()
     .sort({ date: -1 })
-    .then((posts) => res.json(posts))
-    .catch((err) =>
+    .then(posts => res.json(posts))
+    .catch(err =>
       res.status(404).json({ nopostfound: 'No posts available at the moment' })
     );
 });
@@ -30,8 +30,8 @@ router.get('/', (req, res) => {
 // @access Public
 router.get('/:id', (req, res) => {
   Post.findById(req.params.id)
-    .then((post) => res.json(post))
-    .catch((err) =>
+    .then(post => res.json(post))
+    .catch(err =>
       res.status(404).json({ nopostfound: 'No post found with that ID' })
     );
 });
@@ -57,7 +57,7 @@ router.post(
       user: req.user.id
     });
 
-    newPost.save().then((post) => res.json(post));
+    newPost.save().then(post => res.json(post));
   }
 );
 
@@ -68,9 +68,9 @@ router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Profile.findOne({ user: req.user.id }).then((profile) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
       Post.findById(req.params.id)
-        .then((post) => {
+        .then(post => {
           // Check for post owner
           if (post.user.toString() !== req.user.id) {
             return res
@@ -80,7 +80,75 @@ router.delete(
           // Delete
           post.remove().then(() => res.json({ success: true }));
         })
-        .catch((err) =>
+        .catch(err =>
+          res.status(404).json({ postnofound: 'No post found with that ID' })
+        );
+    });
+  }
+);
+
+// @route  POST api/posts/like/:id
+// @desc   Like post
+// @access Private
+router.post(
+  '/like/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadyliked: 'User already liked this post' });
+          }
+
+          // Add user id to likes Array
+          post.likes.unshift({ user: req.user.id });
+
+          post.save().then(post => res.json(post));
+        })
+        .catch(err =>
+          res.status(404).json({ postnofound: 'No post found with that ID' })
+        );
+    });
+  }
+);
+
+// @route  POST api/posts/unlike/:id
+// @desc   Unlike post
+// @access Private
+router.post(
+  '/unlike/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            return res
+              .status(400)
+              .json({ notliked: 'You have not yet liked this post' });
+          }
+
+          // Get remove index
+          const removeIndex = post.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
+
+          // Splice out the Array
+          post.likes.splice(removeIndex, 1);
+
+          // Save
+          post.save().then(psot => res.json(post));
+        })
+        .catch(err =>
           res.status(404).json({ postnofound: 'No post found with that ID' })
         );
     });
