@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import classnames from 'classnames';
-import { error } from 'util';
 
 class Register extends Component {
   state = {
