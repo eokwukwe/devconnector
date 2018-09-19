@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { registeruser } from '../../actions/authActions';
+import { registerUser } from '../../actions/authActions';
 
 class Register extends Component {
   state = {
@@ -13,6 +13,26 @@ class Register extends Component {
     password2: '',
     errors: {}
   };
+
+  // Add the errors object to the state
+  //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  //=============================///////////////========================//
+  //-----------Refer back to Q&A in Section 8, Lecture 42---------------//
+
+  // Another way to perform the work of componentWillReceiveProps with the
+  // new getDerivedStateFromProps
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.errors !== this.props.errors) {
+  //    this.setState({ errors: this.props.errors });
+  //   }
+  //  }
+  //=============================///////////////========================//
 
   onChange = name => e => {
     this.setState({
@@ -25,21 +45,14 @@ class Register extends Component {
 
     const newUser = this.state;
 
-    this.props.registeruser(newUser);
-
-    // axios
-    //   .post('/api/users/register', newUser)
-    //   .then(res => console.log(res.data))
-    //   .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
     const { name, email, password, password2, errors } = this.state;
-    const { user } = this.props.auth;
 
     return (
       <div className="register">
-        {user ? user.name : null}
         <div className="container">
           <div className="row">
             <div className="col-sm-10 col-md-8 col-lg-6 m-auto">
@@ -124,15 +137,17 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  registeruser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { registeruser }
-)(Register);
+  { registerUser }
+)(withRouter(Register));
