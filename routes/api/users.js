@@ -15,7 +15,7 @@ const User = require('../../models/User'),
 // @access Public
 router.get('/test', (req, res) => res.json({ msg: 'Users works' }));
 
-// @route  GET api/users/register
+// @route  POST api/users/register
 // @desc   Register user
 // @access Public
 router.post('/register', (req, res) => {
@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then((user) => {
+  User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       errors.email = 'Email already exists'; // using the errors object in the validation function
       return res.status(400).json(errors);
@@ -50,8 +50,8 @@ router.post('/register', (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json(user))
-            .catch((err) => console.log(err));
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
         });
       });
     }
@@ -71,7 +71,7 @@ router.post('/login', (req, res) => {
   }
 
   // Find the user by email
-  User.findOne({ email }).then((user) => {
+  User.findOne({ email }).then(user => {
     // Check for user
     if (!user) {
       errors.email = 'User not found';
@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
     }
 
     // Check password
-    bcrypt.compare(password, user.password).then((isMatch) => {
+    bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // Create jwt payload
         const payload = { id: user.id, name: user.name, avatar: user.avatar };
