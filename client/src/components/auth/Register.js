@@ -14,6 +14,14 @@ class Register extends Component {
     errors: {}
   };
 
+  // Prevent user from using the url address bar to navigate to
+  // to the register or login page when logged in
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   // Add the errors object to the state
   //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
   componentWillReceiveProps(nextProps) {

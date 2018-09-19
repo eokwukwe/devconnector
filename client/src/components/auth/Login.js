@@ -12,6 +12,14 @@ class Login extends Component {
     errors: {}
   };
 
+  // Prevent user from using the url address bar to navigate to
+  // to the register or login page when logged in
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
