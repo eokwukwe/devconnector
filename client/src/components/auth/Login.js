@@ -56,29 +56,38 @@ class Login extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Login</h1>
+              <div className="card">
+                <h1 className="card-header text-center">Login</h1>
+                <div className="card-body">
+                  <h5 className="card-title text-center">
+                    Sign in to your DevConnector account
+                  </h5>
+                  <form onSubmit={this.onSubmit}>
+                    <TextFieldGroup
+                      placeholder="Email Address"
+                      name="email"
+                      type="email"
+                      value={email}
+                      onChange={this.onChange('email')}
+                      error={errors.email}
+                    />
 
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Email Address"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={this.onChange('email')}
-                  error={errors.email}
-                />
+                    <TextFieldGroup
+                      placeholder="Password"
+                      name="password"
+                      type="password"
+                      value={password}
+                      onChange={this.onChange('password')}
+                      error={errors.password}
+                    />
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={this.onChange('password')}
-                  error={errors.password}
-                />
-
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+                    <input
+                      type="submit"
+                      className="btn btn-info btn-block mt-4"
+                    />
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -64,50 +64,57 @@ class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-10 col-md-8 col-lg-6 m-auto">
-              <h1 className="display-4 text-center">Register</h1>
-              <p className="lead text-center">
-                Create your DevConnector account
-              </p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Enter your name"
-                  name="name"
-                  type="text"
-                  value={name}
-                  onChange={this.onChange('name')}
-                  error={errors.name}
-                />
+              <div className="card">
+                <h1 className="card-header text-center">Register</h1>
+                <div className="card-body">
+                  <h5 className="card-title text-center">
+                    Create your DevConnector account
+                  </h5>
+                  <form noValidate onSubmit={this.onSubmit}>
+                    <TextFieldGroup
+                      placeholder="Enter your name"
+                      name="name"
+                      type="text"
+                      value={name}
+                      onChange={this.onChange('name')}
+                      error={errors.name}
+                    />
 
-                <TextFieldGroup
-                  placeholder="Email Address"
-                  name="name"
-                  type="email"
-                  value={email}
-                  onChange={this.onChange('email')}
-                  error={errors.email}
-                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                />
+                    <TextFieldGroup
+                      placeholder="Email Address"
+                      name="name"
+                      type="email"
+                      value={email}
+                      onChange={this.onChange('email')}
+                      error={errors.email}
+                      info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                    />
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={this.onChange('password')}
-                  error={errors.password}
-                />
+                    <TextFieldGroup
+                      placeholder="Password"
+                      name="password"
+                      type="password"
+                      value={password}
+                      onChange={this.onChange('password')}
+                      error={errors.password}
+                    />
 
-                <TextFieldGroup
-                  placeholder="Confirm Password"
-                  name="password2"
-                  type="password"
-                  value={password2}
-                  onChange={this.onChange('password2')}
-                  error={errors.password2}
-                />
+                    <TextFieldGroup
+                      placeholder="Confirm Password"
+                      name="password2"
+                      type="password"
+                      value={password2}
+                      onChange={this.onChange('password2')}
+                      error={errors.password2}
+                    />
 
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+                    <input
+                      type="submit"
+                      className="btn btn-info btn-block mt-4"
+                    />
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
