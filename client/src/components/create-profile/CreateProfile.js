@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
+import { createProfile } from '../../actions/profileActions';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -26,6 +29,15 @@ class CreateProfile extends Component {
     errors: {}
   };
 
+  //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = name => e => {
     this.setState({
       [name]: e.target.value
@@ -35,7 +47,23 @@ class CreateProfile extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    console.log(this.state);
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram
+    };
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   render() {
@@ -214,6 +242,7 @@ class CreateProfile extends Component {
 
                     <div className="mb-3">
                       <button
+                        type="button"
                         className="btn btn-secondary"
                         onClick={() => {
                           this.setState(preState => ({
@@ -251,4 +280,7 @@ const matStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(matStateToProps)(CreateProfile);
+export default connect(
+  matStateToProps,
+  { createProfile }
+)(withRouter(CreateProfile));
