@@ -7,6 +7,7 @@ import Spinner from '../common/Spinner';
 import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 import ProfileActions from './ProfileActions';
 import Experience from './Experience';
+import Education from './Education';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -37,6 +38,8 @@ class Dashboard extends Component {
 
             <ProfileActions />
             <Experience experience={profile.experience} />
+            <div className="m-5" />
+            <Education education={profile.education} />
 
             <div style={{ marginBottom: '60px' }} />
             <button
@@ -62,14 +65,8 @@ class Dashboard extends Component {
 
     return (
       <div className="dashboard">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="dispaly-4">Dashboard</h1>
-              {dashboardContent}
-            </div>
-          </div>
-        </div>
+        <h1 className="dispaly-4">Dashboard</h1>
+        {dashboardContent}
       </div>
     );
   }
