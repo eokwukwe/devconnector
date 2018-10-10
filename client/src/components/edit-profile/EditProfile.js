@@ -330,12 +330,12 @@ EditProfile.propTypes = {
   errors: PropTypes.object.isRequired
 };
 
-const matStateToProps = state => ({
+const mapStateToProps = state => ({
   profile: state.profile,
   errors: state.errors
 });
 
 export default connect(
-  matStateToProps,
+  mapStateToProps,
   { createProfile, getCurrentProfile }
 )(withRouter(EditProfile));
