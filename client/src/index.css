@@ -1,6 +1,12 @@
 body {
   margin: 0;
-  padding: 0;
+  /* padding: 0; */
   font-family: sans-serif;
   background: #f2f1ef;
+  overflow-x: hidden;
 }
+
+/* .App {
+  min-height: calc(100vh - 150px);
+  margin-bottom: 1.5rem;
+} */
