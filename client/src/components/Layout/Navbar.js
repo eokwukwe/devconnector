@@ -61,7 +61,7 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
+      <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
             DevConnector
