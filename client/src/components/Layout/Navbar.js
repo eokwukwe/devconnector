@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
-import { clearCurrentProfile } from '../../actions/profileActions';
+import React, { Component } from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
-  onLogoutClick = e => {
+  onLogoutClick = (e) => {
     e.preventDefault();
     this.props.logoutUser();
     this.props.clearCurrentProfile();
@@ -18,6 +18,11 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <NavLink className="nav-link" to="/feed">
+            Post Feed
+          </NavLink>
+        </li>
+        <li className="nav-item">
           <NavLink className="nav-link" to="/dashboard">
             Dashboard
           </NavLink>
@@ -26,12 +31,12 @@ class Navbar extends Component {
           <span
             onClick={this.onLogoutClick}
             className="nav-link"
-            style={{ cursor: 'pointer' }}>
+            style={{ cursor: "pointer" }}>
             <img
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
-              style={{ width: '25px', marginRight: '5px' }}
+              style={{ width: "25px", marginRight: "5px" }}
               title="You must have a Gravatar connected to your email to display an image"
             />
             Logout
@@ -73,7 +78,7 @@ class Navbar extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to="/profiles">
-                  {' '}
+                  {" "}
                   Developers
                 </NavLink>
               </li>
@@ -92,7 +97,7 @@ Navbar.propTypes = {
   clearCurrentProfile: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
