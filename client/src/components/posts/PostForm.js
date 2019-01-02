@@ -10,10 +10,10 @@ class PostForm extends Component {
     errors: {}
   };
 
-  componentWillReceiveProps(errorProps) {
-    if (errorProps.errors) {
+  componentWillReceiveProps(newProps) {
+    if (newProps.errors) {
       this.setState({
-        errors: errorProps.errors
+        errors: newProps.errors
       });
     }
   }
@@ -27,12 +27,12 @@ class PostForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { user } = this.props.auth;
-    const { text } = this.state;
     const newPost = {
-      text,
+      text: this.state.text,
       name: user.name,
       avatar: user.avatar
     };
+
     this.props.addPost(newPost);
     this.setState({ text: "" });
   };
