@@ -141,7 +141,7 @@ router.post(
           post.likes.splice(removeIndex, 1);
 
           // Save
-          post.save().then(psot => res.json(post));
+          post.save().then(post => res.json(post));
         })
         .catch(err =>
           res.status(404).json({ postnotfound: 'No post found with that ID' })
