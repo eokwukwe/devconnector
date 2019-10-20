@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { clientId, clientSecret } from '../../keys';
-
+// import { clientId, clientSecret } from '../../keys';
+const clientId = '97780882ddea882cb9f6';
+const clientSecret = '71e35f549d5d1fc792fead88520d9d5878a48ae5';
 class ProfileGithub extends Component {
   state = {
-    clientId: clientId,
-    clientSecret: clientSecret,
+    clientId,
+    clientSecret,
     count: 5,
     sort: 'created: asc',
     repos: []
